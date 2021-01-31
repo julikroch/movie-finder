@@ -1,38 +1,24 @@
+import React, { Component } from 'react';
+import { Switch, Route } from 'react-router-dom'
+
+import { Home } from './pages/Home'
+import { Detail } from './pages/Detail'
+import { NotFound } from './pages/NotFound'
+
 import './App.css';
 import 'bulma/css/bulma.css'
 
-import { Title } from './components/Title'
-import { SearchForm } from './components/SearchForm'
-import { Component } from 'react';
-import { MoviesList } from './components/MoviesLIst';
-
 class App extends Component {
-  state={ usedSearch: false, results: [] }
-
-  _handleResults = (results) => {
-    this.setState({results, usedSearch: true})
-  }
-
-  _renderResults(){
-    return this.state.results.length === 0
-    ? <p> Sorry!😢 <br/> Results not found!</p>
-    : <MoviesList movies = {this.state.results} />
-  }
-
-  render(){
+  render() {
     return (
       <div className="App">
-        <Title>Search movies</Title>
-        <div className="SearchForm-wrapper">
-          <SearchForm onResults = {this._handleResults} />
-        </div>
-        {
-          this.state.usedSearch
-          ? this._renderResults()
-          : <small> Use the form to search a movie</small>
-        }
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/detail/:movieId' component={Detail} />
+          <Route component={NotFound} />
+        </Switch>
       </div>
-    )
+    );
   }
 }
 
